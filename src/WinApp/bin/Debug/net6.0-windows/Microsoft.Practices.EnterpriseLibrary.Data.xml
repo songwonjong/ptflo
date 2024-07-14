@@ -1,0 +1,1219 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Microsoft.Practices.EnterpriseLibrary.Data</name>
+    </assembly>
+    <members>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism">
+            <devdoc>
+            CachingMechanism provides caching support for stored procedure 
+            parameter discovery and caching
+            </devdoc>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism.CloneParameters(System.Data.IDataParameter[])">
+            <devdoc>
+            Create and return a copy of the IDataParameter array.
+            </devdoc>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism.Clear">
+            <devdoc>
+            Empties all items from the cache
+            </devdoc>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism.AddParameterSetToCache(System.String,System.Data.IDbCommand,System.Data.IDataParameter[])">
+            <devdoc>
+            Add a parameter array to the cache for the command.
+            </devdoc>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism.GetCachedParameterSet(System.String,System.Data.IDbCommand)">
+            <devdoc>
+            Gets a parameter array from the cache for the command. Returns null if no parameters are found.
+            </devdoc>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CachingMechanism.IsParameterSetCached(System.String,System.Data.IDbCommand)">
+            <devdoc>
+            Gets if a given stored procedure on a specific connection string has a cached parameter set
+            </devdoc>        
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1">
+            <summary>
+            Base class for Data Accessors that execute a <see cref="T:System.Data.Common.DbCommand"/>.
+            </summary>
+            <typeparam name="TResult">The element type this accessor will return.</typeparam>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.#ctor(Microsoft.Practices.EnterpriseLibrary.Data.Database,Microsoft.Practices.EnterpriseLibrary.Data.IRowMapper{`0})">
+            <summary>
+            Initialized the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1"/> with a database instance and a Row Mapper.
+            </summary>
+            <param name="database">The <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.Database"/> used to execute the <see cref="T:System.Data.Common.DbCommand"/>.</param>
+            <param name="rowMapper">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.IRowMapper`1"/> that will be used to convert the returned data to clr type <typeparamref name="TResult"/>.</param>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.#ctor(Microsoft.Practices.EnterpriseLibrary.Data.Database,Microsoft.Practices.EnterpriseLibrary.Data.IResultSetMapper{`0})">
+            <summary>
+            Initialized the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1"/> with a database instance and a Row Mapper.
+            </summary>
+            <param name="database">The <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.Database"/> used to execute the <see cref="T:System.Data.Common.DbCommand"/>.</param>
+            <param name="resultSetMapper">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.IResultSetMapper`1"/> that will be used to convert the returned set to an enumerable of clr type <typeparamref name="TResult"/>.</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.Database">
+            <summary>
+            The database object this accessor is wrapped around.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.Execute(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the <paramref name="command"/> and returns an enumerable of <typeparamref name="TResult"/>.
+            The enumerable returned by this method uses deferred loading to return the results.
+            </summary>
+            <param name="command">The command that will be executed.</param>
+            <returns>An enumerable of <typeparamref name="TResult"/>.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.BeginExecute(System.Data.Common.DbCommand,Microsoft.Practices.EnterpriseLibrary.Data.IParameterMapper,System.AsyncCallback,System.Object,System.Object[])">
+            <summary>
+            Helper method to kick off execution of an asynchronous database operation.
+            This method handles the boilerplate of setting up the parameters and invoking
+            the operation on the database with the right options.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.Common.DbCommand"/> to execute.</param>
+            <param name="parameterMapper">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.IParameterMapper"/> to use to set the parameter
+            values.</param>
+            <param name="callback">Callback to execute when the operation's result is available.</param>
+            <param name="state">State to pass to the callback.</param>
+            <param name="parameterValues">Input parameter values.</param>
+            <returns>An <see cref='T:System.IAsyncResult'/> object representing the outstanding async request.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.EndExecute(System.IAsyncResult)">
+            <summary>Complete an operation started by <see cref="M:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1.BeginExecute(System.AsyncCallback,System.Object,System.Object[])"/>.</summary>
+            <returns>The result sequence.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.GuardAsyncAllowed">
+            <summary>
+            Checks if the current <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.CommandAccessor`1.Database"/> object supports asynchronous operations,
+            and throws <see cref="T:System.InvalidOperationException"/> if not.
+            </summary>
+            <exception cref="T:System.InvalidOperationException">The database does not support asynchronous operations.</exception>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.ConnectionStringSettingsSectionName">
+            <summary>
+            Name of the connection strings settings configuration section.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.DbProviderMappingMetadata">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.DbProviderMappingMetadata.Name">
+            <summary>
+            This property supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringsSectionMetadata">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringSettingsCollectionMetadata">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringSettingsMetadata">
+            <summary>
+            This class supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringSettingsMetadata.Name">
+            <summary>
+            This property supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringSettingsMetadata.ConnectionString">
+            <summary>
+            This property supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DataAccessDesignTime.MetadataTypes.ConnectionStringSettingsMetadata.ProviderName">
+            <summary>
+            This property supports the Enterprise Library infrastructure and is not intended to be used directly from your code.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData">
+            <summary>
+            Describes a <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> instance, aggregating information from a <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConnectionStringSettings"/>
+            and potentially other sources of configuration.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.#ctor(System.Configuration.ConnectionStringSettings,System.Func{System.String,System.Configuration.ConfigurationSection},Microsoft.Practices.EnterpriseLibrary.Data.ISqlCache,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData"/> class with a connection string and a configuration
+             source.
+            </summary>
+            <param name="connectionStringSettings">The <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConnectionStringSettings"/> for the represented database.</param>
+            <param name="configurationSource">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource"/> from which additional information can 
+            be retrieved if necessary.</param>
+            <param name="sqlCache">Sql File Cache Handler</param>
+            <param name="logger">Application Logger</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConnectionStringSettings">
+            <summary>
+            Gets the <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConnectionStringSettings"/> for the database data.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConfigurationSource">
+            <summary>
+             Gets the function to access configuration information.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.Name">
+            <summary>
+            Gets the name for the represented database.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.ConnectionString">
+            <summary>
+            Gets the connection string for the represented database.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseData.BuildDatabase">
+            <summary>
+            Builds the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> represented by this configuration object.
+            </summary>
+            <returns>A database.</returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings">
+            <summary>
+            <para>Represents the root configuration for data.</para>
+            </summary>
+            <remarks>
+            <para>The class maps to the <c>databaseSettings</c> element in configuration.</para>
+            </remarks>
+        </member>
+        <member name="F:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings.SectionName">
+            <summary>
+            The name of the data configuration section.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings.#ctor">
+            <summary>
+            <para>Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings"/> class.</para>
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings.GetDatabaseSettings(Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource)">
+            <summary>
+            Retrieves the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings"/> from a configuration source.
+            </summary>
+            <param name="configurationSource">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource"/> to query for the database settings.</param>
+            <returns>The database settings from the configuration source, or <see langword="null"/> (<b>Nothing</b> in Visual Basic) if the 
+            configuration source does not contain database settings.</returns>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings.DefaultDatabase">
+            <summary>
+            <para>Gets or sets the default database instance name.</para>
+            </summary>
+            <value>
+            <para>The default database instance name.</para>
+            </value>
+            <remarks>
+            <para>This property maps to the <c>defaultInstance</c> element in configuration.</para>
+            </remarks>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSettings.ProviderMappings">
+            <summary>
+            Holds the optional mappings from ADO.NET's database providers to Enterprise Library's database types.
+            </summary>
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping"/>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings">
+            <summary>
+            Provides a configuration-like view over the Data Access Application Block sections
+            </summary>
+            <remarks>
+            As the DataAccessBlock relies on a number of configuration sections (such as connectionStrings), this
+            config settings provides an abstraction over all these to simplify creating database objects.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.#ctor(Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings"/> class
+            with the given <see cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource"/>.
+            </summary>
+            <remarks>This constructor is primarily for test convenience.</remarks>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.#ctor(System.Func{System.String,System.Configuration.ConfigurationSection})">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings"/> class
+            with the given configuration access function.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.DefaultDatabase">
+            <summary>
+            Gets the default database instance name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.Databases">
+            <summary>
+            Gets the objects describing the database instances in the configuration source.
+            </summary>
+            <remarks>
+            Databases are derived from the collection of connection strings.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.GetConnectionStringSettings(System.String)">
+            <summary>
+            Returns the <see cref="T:System.Configuration.ConnectionStringSettings"/> object with the given name from the connection strings
+            configuration section in the receiver's configuration source.
+            </summary>
+            <remarks>
+            The connection string will be retrieved from the configuration source if it contains the connection strings section,
+            otherwise it will be retrieved from the default configuration file.
+            </remarks>
+            <param name="name">The name for the desired connection string configuration.</param>
+            <returns>The connection string configuration.</returns>
+            <exception cref="T:System.ArgumentException">if <paramref name="name"/> is <see langword="null"/> (<b>Nothing</b> in Visual Basic) or empty.</exception>
+            <exception cref="T:System.Configuration.ConfigurationErrorsException">if the connection string object is not found, or if it does not specify a provider name.</exception>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.GetDatabase(System.String)">
+            <summary>
+            Gets the object describing the database instance with name <paramref name="name"/> in the configuration source.
+            </summary>
+            <param name="name">The name of the database.</param>
+            <returns>A configuration object</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.GetProviderMapping(System.String)">
+            <summary>
+            This method is made public for unit testing purposes.
+            </summary>
+            <param name="dbProviderName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping">
+            <summary>
+            Represents the mapping from an ADO.NET provider to an Enterprise Library <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/>.
+            </summary>
+            <remarks>
+            <para>
+            The Enterprise Library Data Access Application Block leverages the ADO.NET 2.0 provider factories. To determine what type of <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> matches a given provider factory type, the optional 
+            <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping"/> configuration objects can be defined in the block's configuration section.
+            </para>
+            <para>
+            If a mapping is not present for a given provider type, sensible defaults will be used:
+            <list type="bullet">
+            <item>For provider name "System.Data.SqlClient", or for a provider of type <see cref="T:System.Data.SqlClient.SqlClientFactory"/>, the 
+            <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Sql.SqlDatabase"/> will be used.</item>
+            <item>For provider name "Oracle.ManagedDataAccess.Client", or for a provider of type <see cref="T:Oracle.ManagedDataAccess.Client.OracleClientFactory"/>, the 
+            <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Oracle.OracleDatabase"/> will be used.</item>
+            <item>In any other case, the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.GenericDatabase"/> will be used.</item>
+            </list>
+            </para>
+            </remarks>
+            <seealso cref="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DatabaseSyntheticConfigSettings.GetProviderMapping(System.String)"/>
+            <seealso cref="T:System.Data.Common.DbProviderFactory"/>
+        </member>
+        <member name="F:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.DefaultSqlProviderName">
+            <summary>
+            Default name for the Sql managed provider.
+            </summary>
+        </member>
+        <member name="F:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.DefaultOracleProviderName">
+            <summary>
+            Default name for the Oracle managed provider.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.#ctor">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping"/> class.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.#ctor(System.String,System.Type)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping"/> class with name and <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> type.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.#ctor(System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping"/> class with name and fully qualified type name of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.DatabaseType">
+            <summary>
+            Gets or sets the type of database to use for the mapped ADO.NET provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.DatabaseTypeName">
+            <summary>
+            Gets or sets the fully qualified type name of the database to use for the mapped ADO.NET provider.
+            </summary>
+            <value>
+            The fully qualified type name of the database to use for the mapped ADO.NET provider.
+            </value>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.DbProviderName">
+            <summary>
+             Gets the logical name of the ADO.NET provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DbProviderMapping.Name">
+            <summary/>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources">
+            <summary>
+              A strongly-typed resource class, for looking up localized strings, etc.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ResourceManager">
+            <summary>
+              Returns the cached ResourceManager instance used by this class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.Culture">
+            <summary>
+              Overrides the current thread's CurrentUICulture property for all
+              resource lookups using this strongly typed resource class.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.AddDataSettings">
+            <summary>
+              Looks up a localized string similar to Add Data Settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.CategoryName">
+            <summary>
+              Looks up a localized string similar to (name).
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsCollectionMetadataDescription">
+            <summary>
+              Looks up a localized string similar to Database Instances.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsCollectionMetadataDisplayName">
+            <summary>
+              Looks up a localized string similar to Database Instances.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataConnectionStringDescription">
+            <summary>
+              Looks up a localized string similar to Connection String.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataConnectionStringDisplayName">
+            <summary>
+              Looks up a localized string similar to Connection String.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataDescription">
+             <summary>
+               Looks up a localized string similar to A connection string is used to establish the initial connection to a database instance. 
+            The exact contents of the connection string depend on the specific data source for this connection..
+             </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataDisplayName">
+            <summary>
+              Looks up a localized string similar to Database Connection String.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataNameDescription">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataNameDisplayName">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataProviderNameDescription">
+            <summary>
+              Looks up a localized string similar to Database Provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringSettingsMetadataProviderNameDisplayName">
+            <summary>
+              Looks up a localized string similar to Database Provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringsSectionMetadataDescription">
+            <summary>
+              Looks up a localized string similar to Database Settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.ConnectionStringsSectionMetadataDisplayName">
+            <summary>
+              Looks up a localized string similar to Database Settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsDefaultDatabaseDescription">
+            <summary>
+              Looks up a localized string similar to The default Database instance to use when code does not specify a named Database instance..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsDefaultDatabaseDisplayName">
+            <summary>
+              Looks up a localized string similar to Default Database Instance.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsDescription">
+            <summary>
+              Looks up a localized string similar to Configuration settings for the Data Access Application Block..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsDisplayName">
+            <summary>
+              Looks up a localized string similar to Data Settings.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsProviderMappingsDescription">
+            <summary>
+              Looks up a localized string similar to Providers that allow the Data Access Application Block to use any database for which a suitable Enterprise Library provider is available..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DatabaseSettingsProviderMappingsDisplayName">
+            <summary>
+              Looks up a localized string similar to Custom Databases.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingDatabaseTypeNameDescription">
+            <summary>
+              Looks up a localized string similar to The fully qualified type name of the class that maps the ADO.NET provider for this database type to Enterprise Library..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingDatabaseTypeNameDisplayName">
+            <summary>
+              Looks up a localized string similar to Type.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingDescription">
+            <summary>
+              Looks up a localized string similar to A custom class that maps the ADO.NET provider for the database type specified as the provider in the connection string of a Database Instance to Enterprise Library..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingDisplayName">
+            <summary>
+              Looks up a localized string similar to Custom Database Provider.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingNameDescription">
+            <summary>
+              Looks up a localized string similar to The name of the Custom Database Provider..
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.DbProviderMappingNameDisplayName">
+            <summary>
+              Looks up a localized string similar to Name.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseAnotherDatabaseConfiguration">
+            <summary>
+            Configuration extensions for database types specified via the <see cref="M:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.DatabaseProviderExtensions.AnotherDatabaseType(Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviders,System.String)" />.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseAnotherDatabaseConfiguration.WithConnectionString(System.Data.Common.DbConnectionStringBuilder)">
+            <summary />
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension">
+            <summary>
+             Base class to help build database-specific configurations extensions for <see cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.DataConfigurationSourceBuilderExtensions"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.#ctor(Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviders)">
+            <summary>
+             Initializes a new DatabaseConfigurationExtension with a <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviders"/> context.
+            </summary>
+            <remarks>
+             This class supports extending the data configuration section's fluent-style API.  New database providers
+             can inherit from this class to gain access to the current <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.ConnectionString"/> and underlying <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.Builder"/>
+             properties.  
+             
+             This class also implements the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProperties"/> to enable continuation of the data
+             fluent interface.
+             </remarks>
+            <param name="context"></param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.ThatIs">
+            <summary>
+             Specify the type of database.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.ForDatabaseNamed(System.String)">
+            <summary>
+             Configure a named database.
+            </summary>
+            <param name="databaseName">Name of database to configure</param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.AsDefault">
+            <summary>
+             Set this database as the default one in the configuration.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.ConnectionString">
+            <summary>
+             The connection string in progress.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.Builder">
+            <summary>
+             Context of the current builder for the extension.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.WithConnectionString(System.String)">
+            <summary>
+            Connection string to use for this data source.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <returns></returns>
+            <seealso cref="T:System.Configuration.ConnectionStringSettings"/>
+            <seealso cref="T:System.Data.Common.DbConnectionStringBuilder"/>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension.WithConnectionString(System.Data.Common.DbConnectionStringBuilder)">
+            <summary>
+             Connection string to use for this data source
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfiguration">
+            <summary>
+             Supports configuring the data connections via fluent-style interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfiguration.ForDatabaseNamed(System.String)">
+            <summary>
+             Configure a named database.
+            </summary>
+            <param name="databaseName">Name of database to configure</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProperties">
+            <summary>
+            Database configuration properties that apply to all databases.
+            </summary>
+            <remarks>This interface is intended to support a fluent-style configuration interface.</remarks>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProperties.AsDefault">
+            <summary>
+             Set this database as the default one in the configuration.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviderEntry">
+            <summary>
+             This interface support the database configuration fluent interface.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviderEntry.ThatIs">
+            <summary>
+             Specify the type of database.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseConfigurationProviders">
+            <summary>
+             Extension point for database providers to connect to the data configuration fluent-api.
+            </summary>
+             <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.DataConfigurationSourceBuilderExtensions"/>
+             <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.DatabaseConfigurationExtension"/>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseDefaultConnectionString">
+            <summary>
+            Defines default connection string settings for fluent-style interface.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseDefaultConnectionString.WithConnectionString(System.String)">
+            <summary>
+            Connection string to use for this data source.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <returns></returns>
+            <seealso cref="T:System.Configuration.ConnectionStringSettings"/>
+            <seealso cref="T:System.Data.Common.DbConnectionStringBuilder"/>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderExtensionContext">
+            <summary>
+            Provides extension context for database provider extensions.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderExtensionContext.ConnectionString">
+            <summary>
+             The current connection string under construction in the fluent interface.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderExtensionContext.Builder">
+            <summary>
+             Context of the current builder for the extension
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDataConfiguration">
+            <summary>
+             Starting point for data configuration.
+            </summary>
+             <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.DataConfigurationSourceBuilderExtensions"/>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDataConfiguration.WithProviderNamed(System.String)">
+            <summary>
+            Specify a custom provider name or alias to use.  This must
+            map to the name of the invariant name specified by <see cref="T:System.Data.Common.DbProviderFactories"/>
+            </summary>
+            <remarks>If the provider is not mapped to a specific Enterprise Library <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> class, then the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.GenericDatabase"/> will be used.</remarks>
+            <param name="providerName">The name of the database provider's invariant.</param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderConfiguration">
+            <summary>
+            Defines the mapping options for providers.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderConfiguration.MappedToDatabase(System.Type)">
+            <summary>
+            The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> to map the provider to.
+            </summary>
+            <param name="databaseType">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> type.</param>
+            <returns></returns>
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.GenericDatabase"/>
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Sql.SqlDatabase" />
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Oracle.OracleDatabase" />
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseProviderConfiguration.MappedToDatabase``1">
+            <summary>
+            The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> to map the provider to.
+            </summary>
+            <typeparam name="T">Database type to map to</typeparam>
+            <returns></returns>
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.GenericDatabase"/>
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Sql.SqlDatabase" />
+            <seealso cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Oracle.OracleDatabase" />
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IOdbcDatabaseConfiguration">
+            <summary>   
+            Odbc database configuration options. 
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IOdbcDatabaseConfiguration.WithConnectionString(System.Data.Odbc.OdbcConnectionStringBuilder)">
+            <summary>
+            Define a connection string with the <see cref="T:System.Data.Odbc.OdbcConnectionStringBuilder"/>.
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IOleDbDatabaseConfiguration">
+            <summary>
+            OleDb database configuration options.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IOleDbDatabaseConfiguration.WithConnectionString(System.Data.OleDb.OleDbConnectionStringBuilder)">
+            <summary>
+            Define an OleDb connection with the <see cref="T:System.Data.OleDb.OleDbConnectionStringBuilder"/>
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOracleConfiguration">
+            <summary>
+            Oracle configuration options
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOracleConfiguration.WithConnectionString(System.String)">
+            <summary>
+            Define an Oracle connection with a connection string.
+            </summary>
+            <param name="connectionString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOracleConfiguration.WithConnectionString(Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder)">
+            <summary>
+            Define an Oracle connection with the <see cref="T:Oracle.ManagedDataAccess.Client.OracleConnectionStringBuilder"/>
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOracleConfiguration.WithPackageNamed(System.String)">
+            <summary>
+            Define an Oracle package with the specified name.
+            </summary>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOraclePackageConfiguration">
+            <summary>
+            Oracle package configuration options.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseOraclePackageConfiguration.AndPrefix(System.String)">
+            <summary>
+            Define the prefix for the Oracle package.
+            </summary>
+            <param name="prefix"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.OracleConfigurationExtension.Microsoft#Practices#EnterpriseLibrary#Data#Configuration#Fluent#IDatabaseOraclePackageConfiguration#AndPrefix(System.String)">
+            <summary />
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.OracleConfigurationExtension.WithPackageNamed(System.String)">
+            <summary />
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseSqlCeDatabaseConfiguration">
+            <summary>
+            SqlCe database configuration options.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseSqlDatabaseConfiguration">
+            <summary>
+            Sql Server Database configuration options.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.Fluent.IDatabaseSqlDatabaseConfiguration.WithConnectionString(System.Data.SqlClient.SqlConnectionStringBuilder)">
+            <summary>
+            Define a connection string using the <see cref="T:System.Data.SqlClient.SqlConnectionStringBuilder"/>.
+            </summary>
+            <param name="builder"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.GenericDatabaseData">
+            <summary>
+            Describes a <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.GenericDatabase"/> instance, aggregating information from a 
+            <see cref="T:System.Configuration.ConnectionStringSettings"/>.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.GenericDatabaseData.#ctor(System.Configuration.ConnectionStringSettings,System.Func{System.String,System.Configuration.ConfigurationSection},Microsoft.Practices.EnterpriseLibrary.Data.ISqlCache,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+             Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.GenericDatabaseData"/> class with a connection string and a configuration
+             source.
+            </summary>
+            <param name="connectionStringSettings">The <see cref="T:System.Configuration.ConnectionStringSettings"/> for the represented database.</param>
+            <param name="configurationSource">The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Common.Configuration.IConfigurationSource"/> from which additional information can 
+             be retrieved if necessary.</param>
+            <param name="sqlCache">Sql File Cache Handler</param>
+            <param name="logger">Application Logger</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.GenericDatabaseData.ProviderName">
+            <summary>
+            Gets the name of the ADO.NET provider for the represented database.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Configuration.GenericDatabaseData.BuildDatabase">
+            <summary>
+            Builds the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database" /> represented by this configuration object.
+            </summary>
+            <returns>
+            A database.
+            </returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString">
+            <summary>
+            ConnectionString class constructs a connection string by 
+            inserting a username and password into a template.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString"/> with a connection string, the user ID tokens and password tokens.
+            </summary>
+            <param name="connectionString">The connection string.</param>
+            <param name="userIdTokens">The user id tokens that can be parsed out of the connection string.</param>
+            <param name="passwordTokens">The password tokens that can be parsed out of the connection string.</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.UserName">
+            <summary>
+            Gets or sets the name of the user.
+            </summary>
+            <value>The name of the user.</value>
+            <devdoc>
+            Database username for the connection string.
+            </devdoc>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.Password">
+            <devdoc>
+            User password for the connection string.
+            </devdoc>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.ToString">
+            <devdoc>
+            Gets the formatted connection string.
+            </devdoc>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.ToStringNoCredentials">
+            <devdoc>
+            Gets the formatted connection string without the username and password.
+            </devdoc>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.ConnectionString.CreateNewConnectionString(System.String)">
+            <summary>
+            Formats a new connection string with a user ID and password.
+            </summary>  
+            <param name="connectionStringToFormat">
+            The connection string to format.
+            </param>        
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult">
+            <summary>
+            This class represents an asynchronous operation invoked from the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> class methods.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.#ctor(System.IAsyncResult,System.Data.Common.DbCommand,System.Boolean,System.Boolean,System.DateTime)">
+            <summary>
+            Construct a new <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult"/> instance.
+            </summary>
+            <param name="innerAsyncResult">The <see cref='T:System.IAsyncResult'/> object returned from the underlying
+            async operation.</param>
+            <param name="command">Command that was executed.</param>
+            <param name="disposeCommand">Should the command be disposed at EndInvoke time?</param>
+            <param name="closeConnection">Should this connection be closed at EndInvoke time?</param>
+            <param name="startTime">Time operation was invoked.</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.AsyncState">
+            <summary>
+            The state object passed to the callback.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.AsyncWaitHandle">
+            <summary>
+            Wait handle to use to wait synchronously for completion.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.CompletedSynchronously">
+            <summary>
+            True if begin operation completed synchronously.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.IsCompleted">
+            <summary>
+            Has the operation finished?
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.InnerAsyncResult">
+            <summary>
+            The underlying <see cref="T:System.IAsyncResult"/> object.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.DisposeCommand">
+            <summary>
+            Should the command be disposed by the End method?
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.Command">
+            <summary>
+            The command that was executed.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.CloseConnection">
+            <summary>
+            Should the connection be closed by the End method?
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.Connection">
+            <summary>
+            Connection the operation was invoked on.
+            </summary>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.DaabAsyncResult.StartTime">
+            <summary>
+            Time the operation was started.
+            </summary>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1">
+            <summary>
+            An interface representing an object that wraps a database operation.
+            An Accessor is executed, at which point it will go out to the database
+            and return a <see cref="T:System.Collections.Generic.IEnumerable`1"/> of whatever type <typeparam name="TResult"/>
+            is.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1.Execute(System.Object[])">
+            <summary>
+            Execute the database operation synchronously, returning the
+            <see cref="T:System.Collections.Generic.IEnumerable`1"/> sequence containing the
+            resulting objects.
+            </summary> 
+            <param name="parameterValues">Parameters to pass to the database.</param>
+            <returns>The sequence of result objects.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1.BeginExecute(System.AsyncCallback,System.Object,System.Object[])">
+            <summary>Begin executing the database object asynchronously, returning
+            a <see cref="T:System.IAsyncResult"/> object that can be used to retrieve
+            the result set after the operation completes.</summary>
+            <param name="callback">Callback to execute when the operation's results are available. May
+            be null if you don't wish to use a callback.</param>
+            <param name="state">Extra information that will be passed to the callback. May be null.</param>
+            <param name="parameterValues">Parameters to pass to the database.</param>
+            <remarks>This operation will throw if the underlying <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> object does not
+            support asynchronous operation.</remarks>
+            <exception cref="T:System.InvalidOperationException">The underlying database does not support asynchronous operation.</exception>
+            <returns>The <see cref="T:System.IAsyncResult"/> representing this operation.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1.EndExecute(System.IAsyncResult)">
+            <summary>Complete an operation started by <see cref="M:Microsoft.Practices.EnterpriseLibrary.Data.DataAccessor`1.BeginExecute(System.AsyncCallback,System.Object,System.Object[])"/>.</summary>
+            <returns>The result sequence.</returns>
+        </member>
+        <member name="T:Microsoft.Practices.EnterpriseLibrary.Data.Database">
+            <summary>
+            Represents an abstract database that commands can be run against. 
+            </summary>
+            <remarks>
+            The <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> class leverages the provider factory model from ADO.NET. A database instance holds 
+            a reference to a concrete <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.DbProviderFactory"/> object to which it forwards the creation of ADO.NET objects.
+            </remarks>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.IsDevelopment">
+            <summary>
+            Checks if the current hosting environment name is "Development".
+            </summary>
+            <returns>True if the environment name is "Development", otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.IsStaging">
+            <summary>
+            Checks if the current hosting environment name is "Staging".
+            </summary>
+            <returns>True if the environment name is "Staging", otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.IsProduction">
+            <summary>
+            Checks if the current hosting environment name is "Production".
+            </summary>
+            <returns>True if the environment name is "Production", otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.IsEnvironment(System.String)">
+            <summary>
+            Compares the current hosting environment name against the specified value.
+            </summary>
+            <param name="environmentName">Environment name to validate against.</param>
+            <returns>True if the specified name is the same as the current environment, otherwise false.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.#ctor(System.String,System.Data.Common.DbProviderFactory,Microsoft.Practices.EnterpriseLibrary.Data.ISqlCache,Microsoft.Extensions.Logging.ILogger)">
+            <summary>
+            Initializes a new instance of the <see cref="T:Microsoft.Practices.EnterpriseLibrary.Data.Database"/> class with a connection string and a <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.DbProviderFactory"/>.
+            </summary>
+            <param name="connectionString">The connection string for the database.</param>
+            <param name="dbProviderFactory">A <see cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.DbProviderFactory"/> object.</param>
+            <param name="sqlCache">Sql File Cache Handler</param>
+            <param name="logger">Applikcation Logger</param>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.ConnectionString">
+            <summary>
+            <para>Gets the string used to open a database.</para>
+            </summary>
+            <value>
+            <para>The string used to open a database.</para>
+            </value>
+            <seealso cref="P:System.Data.Common.DbConnection.ConnectionString"/>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.ConnectionStringNoCredentials">
+            <summary>
+            <para>Gets the connection string without the username and password.</para>
+            </summary>
+            <value>
+            <para>The connection string without the username and password.</para>
+            </value>
+            <seealso cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.ConnectionString"/>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.ConnectionStringWithoutCredentials">
+            <summary>
+            Gets the connection string without credentials.
+            </summary>
+            <value>
+            The connection string without credentials.
+            </value>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.DbProviderFactory">
+            <summary>
+            <para>Gets the DbProviderFactory used by the database instance.</para>
+            </summary>
+            <seealso cref="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.DbProviderFactory"/>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddInParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType)">
+            <summary>
+            Adds a new In <see cref="T:System.Data.Common.DbParameter"/> object to the given <paramref name="command"/>.
+            </summary>
+            <param name="command">The command to add the in parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>                
+            <remarks>
+            <para>This version of the method is used when you can have the same parameter object multiple times with different values.</para>
+            </remarks>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddInParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType,System.Object)">
+            <summary>
+            Adds a new In <see cref="T:System.Data.Common.DbParameter"/> object to the given <paramref name="command"/>.
+            </summary>
+            <param name="command">The command to add the parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>                
+            <param name="value"><para>The value of the parameter.</para></param>      
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddInParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType,System.String,System.Data.DataRowVersion)">
+            <summary>
+            Adds a new In <see cref="T:System.Data.Common.DbParameter"/> object to the given <paramref name="command"/>.
+            </summary>
+            <param name="command">The command to add the parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>                
+            <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the value.</para></param>
+            <param name="sourceVersion"><para>One of the <see cref="T:System.Data.DataRowVersion"/> values.</para></param>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddOutParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType,System.Int32)">
+            <summary>
+            Adds a new Out <see cref="T:System.Data.Common.DbParameter"/> object to the given <paramref name="command"/>.
+            </summary>
+            <param name="command">The command to add the out parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>        
+            <param name="size"><para>The maximum size of the data within the column.</para></param>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType,System.Int32,System.Data.ParameterDirection,System.Boolean,System.Byte,System.Byte,System.String,System.Data.DataRowVersion,System.Object)">
+            <summary>
+            Adds a new In <see cref="T:System.Data.Common.DbParameter"/> object to the given <paramref name="command"/>.
+            </summary>
+            <param name="command">The command to add the parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>
+            <param name="size"><para>The maximum size of the data within the column.</para></param>
+            <param name="direction"><para>One of the <see cref="T:System.Data.ParameterDirection"/> values.</para></param>
+            <param name="nullable"><para>A value indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+            <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+            <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+            <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+            <param name="sourceVersion"><para>One of the <see cref="T:System.Data.DataRowVersion"/> values.</para></param>
+            <param name="value"><para>The value of the parameter.</para></param>       
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.AddParameter(System.Data.Common.DbCommand,System.String,System.Data.DbType,System.Data.ParameterDirection,System.String,System.Data.DataRowVersion,System.Object)">
+            <summary>
+            <para>Adds a new instance of a <see cref="T:System.Data.Common.DbParameter"/> object to the command.</para>
+            </summary>
+            <param name="command">The command to add the parameter.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>        
+            <param name="direction"><para>One of the <see cref="T:System.Data.ParameterDirection"/> values.</para></param>                
+            <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+            <param name="sourceVersion"><para>One of the <see cref="T:System.Data.DataRowVersion"/> values.</para></param>
+            <param name="value"><para>The value of the parameter.</para></param>    
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.BuildParameterName(System.String)">
+            <summary>
+            Builds a value parameter name for the current database.
+            </summary>
+            <param name="name">The name of the parameter.</param>
+            <returns>A correctly formated parameter name.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ClearParameterCache">
+            <summary>
+            Clears the parameter cache. Since there is only one parameter cache that is shared by all instances
+            of this class, this clears all parameters cached for all databases.
+            </summary>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ConfigureParameter(System.Data.Common.DbParameter,System.String,System.Data.DbType,System.Int32,System.Data.ParameterDirection,System.Boolean,System.Byte,System.Byte,System.String,System.Data.DataRowVersion,System.Object)">
+            <summary>
+            Configures a given <see cref="T:System.Data.Common.DbParameter"/>.
+            </summary>
+            <param name="param">The <see cref="T:System.Data.Common.DbParameter"/> to configure.</param>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>
+            <param name="size"><para>The maximum size of the data within the column.</para></param>
+            <param name="direction"><para>One of the <see cref="T:System.Data.ParameterDirection"/> values.</para></param>
+            <param name="nullable"><para>A value indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+            <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+            <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+            <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+            <param name="sourceVersion"><para>One of the <see cref="T:System.Data.DataRowVersion"/> values.</para></param>
+            <param name="value"><para>The value of the parameter.</para></param>  
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.CreateConnection">
+            <summary>
+            <para>Creates a connection for this database.</para>
+            </summary>
+            <returns>
+            <para>The <see cref="T:System.Data.Common.DbConnection"/> for this database.</para>
+            </returns>
+            <seealso cref="T:System.Data.Common.DbConnection"/>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.CreateParameter(System.String,System.Data.DbType,System.Int32,System.Data.ParameterDirection,System.Boolean,System.Byte,System.Byte,System.String,System.Data.DataRowVersion,System.Object)">
+            <summary>
+            <para>Adds a new instance of a <see cref="T:System.Data.Common.DbParameter"/> object.</para>
+            </summary>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <param name="dbType"><para>One of the <see cref="T:System.Data.DbType"/> values.</para></param>
+            <param name="size"><para>The maximum size of the data within the column.</para></param>
+            <param name="direction"><para>One of the <see cref="T:System.Data.ParameterDirection"/> values.</para></param>
+            <param name="nullable"><para>A value indicating whether the parameter accepts <see langword="null"/> (<b>Nothing</b> in Visual Basic) values.</para></param>
+            <param name="precision"><para>The maximum number of digits used to represent the <paramref name="value"/>.</para></param>
+            <param name="scale"><para>The number of decimal places to which <paramref name="value"/> is resolved.</para></param>
+            <param name="sourceColumn"><para>The name of the source column mapped to the DataSet and used for loading or returning the <paramref name="value"/>.</para></param>
+            <param name="sourceVersion"><para>One of the <see cref="T:System.Data.DataRowVersion"/> values.</para></param>
+            <param name="value"><para>The value of the parameter.</para></param>  
+            <returns>A newly created <see cref="T:System.Data.Common.DbParameter"/> fully initialized with given parameters.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.CreateParameter(System.String)">
+            <summary>
+            <para>Adds a new instance of a <see cref="T:System.Data.Common.DbParameter"/> object.</para>
+            </summary>
+            <param name="name"><para>The name of the parameter.</para></param>
+            <returns><para>An unconfigured parameter.</para></returns>
+        </member>
+        <member name="P:Microsoft.Practices.EnterpriseLibrary.Data.Database.SupportsParemeterDiscovery">
+            <summary>
+            Does this <see cref='T:Microsoft.Practices.EnterpriseLibrary.Data.Database'/> object support parameter discovery?
+            </summary>
+            <value>Base class always returns false.</value>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.DeriveParameters(System.Data.Common.DbCommand)">
+            <summary>
+            Retrieves parameter information from the stored procedure specified in the <see cref="T:System.Data.Common.DbCommand"/> and populates the Parameters collection of the specified <see cref="T:System.Data.Common.DbCommand"/> object. 
+            </summary>
+            <param name="discoveryCommand">The <see cref="T:System.Data.Common.DbCommand"/> to do the discovery.</param>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.DiscoverParameters(System.Data.Common.DbCommand)">
+            <summary>
+            Discovers the parameters for a <see cref="T:System.Data.Common.DbCommand"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.Common.DbCommand"/> to discover the parameters.</param>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.DoExecuteNonQuery(System.Data.Common.DbCommand)">
+            <summary>
+            Executes the query for <paramref name="command"/>.
+            </summary>
+            <param name="command">The <see cref="T:System.Data.Common.DbCommand"/> representing the query to execute.</param>
+            <returns>The quantity of rows affected.</returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteDataSet(System.Data.Common.DbCommand)">
+            <summary>
+            <para>Executes the <paramref name="command"/> and returns the results in a new <see cref="T:System.Data.DataSet"/>.</para>
+            </summary>
+            <param name="command"><para>The <see cref="T:System.Data.Common.DbCommand"/> to execute.</para></param>
+            <returns>A <see cref="T:System.Data.DataSet"/> with the results of the <paramref name="command"/>.</returns>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteDataSet(System.Data.Common.DbCommand,System.Data.Common.DbTransaction)">
+            <summary>
+            <para>Executes the <paramref name="command"/> as part of the <paramref name="transaction" /> and returns the results in a new <see cref="T:System.Data.DataSet"/>.</para>
+            </summary>
+            <param name="command"><para>The <see cref="T:System.Data.Common.DbCommand"/> to execute.</para></param>
+            <param name="transaction">
+            <para>The <see cref="T:System.Data.IDbTransaction"/> to execute the command within.</para>
+            </param>
+            <returns>A <see cref="T:System.Data.DataSet"/> with the results of the <paramref name="command"/>.</returns>        
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteDataSet(System.String,System.Object[])">
+            <summary>
+            <para>Executes the <paramref name="storedProcedureName"/> with <paramref name="parameterValues" /> and returns the results in a new <see cref="T:System.Data.DataSet"/>.</para>
+            </summary>
+            <param name="storedProcedureName">
+            <para>The stored procedure to execute.</para>
+            </param>
+            <param name="parameterValues">
+            <para>An array of parameters to pass to the stored procedure. The parameter values must be in call order as they appear in the stored procedure.</para>
+            </param>
+            <returns>
+            <para>A <see cref="T:System.Data.DataSet"/> with the results of the <paramref name="storedProcedureName"/>.</para>
+            </returns>
+        </member>
+        <member name="M:Microsoft.Practices.EnterpriseLibrary.Data.Database.ExecuteDataSet(System.Data.Common.DbTransaction,System.String,System.Object[])">
+            <summary>
+            <para>Executes the <paramref name="storedProcedureName"/> with <paramref name="parameterValues" /> as part of the <paramref name="transaction" /> and returns the results in a new <see cref="T:System.D

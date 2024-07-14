@@ -1,0 +1,39 @@
+@import "../../Styles/variavles";
+@import "../../Styles/commons";
+.realTime {
+  border: thick double $main-color;
+  border-radius: 1rem;
+  box-shadow: inset 0px 0px 20px rgba($color: $main-color, $alpha: 0.3);
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: $main-color;
+  font-weight: bold;
+  font-size: xx-large;
+}
+
+.container {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 10px;
+  flex-direction: column;
+  .line {
+    flex: 1;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .inner {
+    flex: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+    font-weight: bold;
+    margin-top: -1rem;
+  }
+}

@@ -1,0 +1,171 @@
+@import "../../Styles/variavles";
+@import "../../Styles/commons";
+@import "../../../src/Styles/common.scss";
+@font-face {
+  font-family: 'NanumSquareRound';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_two@1.0/NanumSquareRound.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+.container {
+  font-family: "NanumSquareRound";
+  display: grid;
+  // grid-template-columns: 11fr 59fr;
+  height: 100%;
+  // border-bottom: 2px solid black;
+  // background: linear-gradient( to right, yellow, red, purple, blue );
+}
+.imageWrapper {
+  // border: 2px solid black;
+  // border-bottom: none; 
+  // border-top: none;
+  background: #00244B;
+  display: flex;
+  flex-wrap: wrap;
+  align-content: center;
+  justify-content: center;
+  height: inherit;
+  width: 15%;
+}
+// .logo {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   background-color: beige;
+//   background-size: 100% 100%;
+//   background-repeat: no-repeat;
+//   background-position: center;
+//   border-right: 2px solid black;
+// }
+.title {
+  display: flex;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  overflow: hidden;
+  border: 1px solid palegreen;
+  border-radius: 5px;
+}
+.alarm {
+  margin-top: 5px;
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  .err {
+    width: 300px;
+    height: 90%;
+    margin: 0px 5px;
+  }
+}
+.menuDept{
+  height: 50px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  align-content: center;
+  color: white;
+  font-size: 17pt;
+  margin-right:30px;
+  >button{
+    // margin-right: 83px;
+    // margin-left: 6px;
+    // height: 35px;
+    // min-width: 35px;
+    // max-width:35px;
+    // width: auto;
+    background-color: #3b3b3b;
+    // background-image: url("../../Image/2/login.png");
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    >img{
+      height: 100% !important;
+    }
+  }
+}
+
+.menuGuide {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  // padding: 10px;
+  // margin-bottom: 2px;
+  border-bottom: 2px solid #284671;
+  // background-color: #00244B;
+  background: linear-gradient( to right, #376799 10px,#00244B);
+  color: white;
+  height: 80px;
+  min-width: 620px;
+  font-weight: 600;
+  font-size: 15pt;
+  width: inherit;
+  .menuDept {
+    // margin-left: 35px;
+    // min-width: 10.5em;
+    width: 8%
+  }
+}
+
+.contentMap {
+  @include RowFlexBox;
+  justify-content: space-between;
+  position: absolute;
+  width: -webkit-fill-available;
+  height: 0;
+  background-color: rgba(10, 10, 30, 0.92);
+  z-index: 99;
+  transition: height 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.contentMapOpen {
+  height: 180px;
+  background-color: rgba(10, 10, 30, 0.92);
+}
+.manuLinkTitle {
+  @include ColFlexBox;
+  font-size: 14pt;
+  font-weight: bold;
+  align-items: center;
+  justify-content: center;
+  min-width: 14.5em;
+  width: 16%;
+  color: #f2f2f2;
+  background-color: rgba(0,0,0,0);
+}
+
+.menuLinkList {
+  @include RowFlexBox;
+  flex: 1;
+  padding: 0px 1% 0px 1%;
+  min-width: 620px;
+}
+
+.menuLabelBox {
+  @include RowFlexBox;
+  justify-content: space-evenly;
+  flex: 1;
+  text-align: center;
+  padding: 0px 1% 0px 1%;
+  height: inherit;
+  align-items: center;
+  span {
+    flex: 1 1;
+    text-align: center;
+    box-sizing: border-box;
+  }
+  span:hover {
+    font-weight: 600;
+    cursor: pointer;
+    // border-bottom: 4px solid #e6ba23;
+    color: rgba(169, 209, 248, 0.48);
+  }
+  .menuimg{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18pt;
+  }
+}

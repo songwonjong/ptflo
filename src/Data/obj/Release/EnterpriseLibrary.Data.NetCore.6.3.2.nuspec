@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>EnterpriseLibrary.Data.NetCore</id>
+    <version>6.3.2</version>
+    <title>Data Access Application Block</title>
+    <authors>Enterprise Library Open Source Project</authors>
+    <requireLicenseAcceptance>true</requireLicenseAcceptance>
+    <license type="expression">Apache-2.0</license>
+    <licenseUrl>https://licenses.nuget.org/Apache-2.0</licenseUrl>
+    <projectUrl>https://github.com/EnterpriseLibrary/data-access-application-block</projectUrl>
+    <description>The Data Access Application Block simplifies the development of tasks that implement common data access functionality. Applications can use this application block in a variety of situations, such as reading data for display, passing data through application layers, and submitting changed data back to the database system.</description>
+    <releaseNotes>This package is distributed as .NET Standard 2.0, .NET Core 2.0, .NET Core 3.0, .NET 4.0, 4.5, 4.6, 4.7 package.</releaseNotes>
+    <copyright>Copyright © Microsoft 2008</copyright>
+    <tags>entlib entlib6 Enterprise Library data daab dab LOB futures OSS</tags>
+    <repository type="git" url="https://github.com/EnterpriseLibrary/data-access-application-block" />
+    <dependencies>
+      <group targetFramework=".NETFramework4.7">
+        <dependency id="EnterpriseLibrary.Common.NetCore" version="6.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess" version="18.3.0" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.140" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETCoreApp3.1">
+        <dependency id="EnterpriseLibrary.Common.NetCore" version="6.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.140" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.Odbc" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.OleDb" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.SqlClient" version="4.8.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework="net5.0">
+        <dependency id="EnterpriseLibrary.Common.NetCore" version="6.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.140" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.Odbc" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.OleDb" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.SqlClient" version="4.8.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.0">
+        <dependency id="EnterpriseLibrary.Common.NetCore" version="6.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.140" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.Odbc" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.SqlClient" version="4.8.3" exclude="Build,Analyzers" />
+      </group>
+      <group targetFramework=".NETStandard2.1">
+        <dependency id="EnterpriseLibrary.Common.NetCore" version="6.3.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.CSharp" version="4.7.0" exclude="Build,Analyzers" />
+        <dependency id="Microsoft.Extensions.Logging.Abstractions" version="6.0.1" exclude="Build,Analyzers" />
+        <dependency id="Newtonsoft.Json" version="13.0.1" exclude="Build,Analyzers" />
+        <dependency id="Oracle.ManagedDataAccess.Core" version="2.19.140" exclude="Build,Analyzers" />
+        <dependency id="System.Configuration.ConfigurationManager" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.Odbc" version="4.5.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.OleDb" version="5.0.0" exclude="Build,Analyzers" />
+        <dependency id="System.Data.SqlClient" version="4.8.3" exclude="Build,Analyzers" />
+      </group>
+    </dependencies>
+    <frameworkAssemblies>
+      <frameworkAssembly assemblyName="System.Configuration" targetFramework=".NETFramework4.7" />
+      <frameworkAssembly assemblyName="System.Transactions" targetFramework=".NETFramework4.7" />
+    </frameworkAssemblies>
+  </metadata>
+  <files>
+    <file src="F:\PTFLO\ptflo\bin\Release\net47\Microsoft.Practices.EnterpriseLibrary.Data.dll" target="lib\net47\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <file src="F:\PTFLO\ptflo\bin\Release\net47\Microsoft.Practices.EnterpriseLibrary.Data.xml" target="lib\net47\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+    <file src="F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Data.dll" target="lib\net5.0\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <file src="F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Data.xml" target="lib\net5.0\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netcoreapp3.1\Microsoft.Practices.EnterpriseLibrary.Data.dll" target="lib\netcoreapp3.1\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netcoreapp3.1\Microsoft.Practices.EnterpriseLibrary.Data.xml" target="lib\netcoreapp3.1\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netstandard2.0\Microsoft.Practices.EnterpriseLibrary.Data.dll" target="lib\netstandard2.0\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netstandard2.0\Microsoft.Practices.EnterpriseLibrary.Data.xml" target="lib\netstandard2.0\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.dll" target="lib\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.dll" />
+    <file src="F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.xml" target="lib\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.xml" />
+  </files>
+</package>

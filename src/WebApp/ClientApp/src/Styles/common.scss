@@ -1,0 +1,32 @@
+@mixin ColFlexBox {
+  display: flex;
+  flex-direction: column;
+}
+
+@mixin RowFlexBox {
+  display: flex;
+  flex-direction: row;
+}
+
+@mixin ModalButton {
+  display: flex;
+  justify-content: flex-end;
+  padding-right: 10px;
+
+  > button {
+    background: rgb(11, 32, 70);
+    color: white !important;
+    padding: 6px 15px;
+    border-radius: 5px;
+  }
+
+  > button:hover {
+    cursor: pointer;
+    background: rgb(211, 218, 229);
+    border-color: rgb(211, 218, 229);
+  }
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}

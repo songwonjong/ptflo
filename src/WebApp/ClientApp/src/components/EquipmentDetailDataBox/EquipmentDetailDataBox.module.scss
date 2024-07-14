@@ -1,0 +1,62 @@
+
+
+    .main {
+      display: flex;
+      width: 173px;
+      height: 70px;
+    }
+    .eqpbutton {
+      color:#ffffff;
+      background-color: rgba( 0, 0, 10, 0.45);
+      border: 2px solid #284671;
+      border-radius: 5%;
+      width:14%;
+      height:40%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      // padding: 15px;
+      font-size: 20pt;
+      .boxDataTitle{
+        padding-left: 10px;
+        padding-top: 10px;
+        padding-bottom: 8px;
+        border-top-left-radius: 5%;
+        border-top-right-radius: 5%;
+        background-color: #00244B;
+      }
+      .boxDataMap{
+        display: flex;
+        height: 60%;
+        padding: 10px;
+        .boxData{
+          // height: 100%;
+          width: 50%;
+          padding: 3px;
+          // padding-top: 5px;
+          display: flex;
+          text-align: center;
+          align-items: center;
+          justify-content: center;
+          border: 2px solid #ff4040;
+          border-radius: 5%;
+        }
+        .boxDataUnit{
+          display: flex;
+          justify-content: center;
+          height: 100%;
+          width: 30%;
+          align-items: center;
+          font-weight: 500;
+        }
+      }
+    }
+    .gridStyle{
+      display: flex;
+      width: 28%;
+      height: auto;
+      div[class*="ag-layout-normal"] {
+        height: auto;
+      }
+    // class#=.ag-root-wrapper-body.ag-layout-normal
+    }

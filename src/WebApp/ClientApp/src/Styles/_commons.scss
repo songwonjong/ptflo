@@ -1,0 +1,5 @@
+@mixin commonBg {
+  border-radius: 10px;
+  background-color: rgba($color: $main-color, $alpha: 0.2);
+  //box-shadow: 5px 5px 5px 5px rgba($color: $border-color, $alpha: 0.2);
+}

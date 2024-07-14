@@ -1,0 +1,8 @@
+{
+"SpaProxyServer": {
+"ServerUrl": "http://localhost:44496",
+"LaunchCommand": "npm start",
+"WorkingDirectory": "F:\\PTFLO\\ptflo\\src\\WebApp\\ClientApp\\",
+"MaxTimeoutInSeconds": "120"
+}
+}

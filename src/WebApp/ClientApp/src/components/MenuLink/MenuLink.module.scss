@@ -1,0 +1,24 @@
+@import "../../../src/Styles/common.scss";
+
+.menuLinkBox {
+  @include ColFlexBox;
+  flex: 1;
+  text-align: center;
+  font-size: 15pt;
+  font-weight: bold;
+
+  .menuLinkBoxItem {
+    padding: 10px 0;
+    color: white;
+    text-decoration: none;
+  }
+  .menuLinkBoxItem:hover {
+    cursor: pointer;
+    color: black;
+    background-color: rgb(206, 206, 206);
+  }
+  .menuLinkBoxItem a {
+    color: inherit;
+    text-decoration: none;
+  }
+}

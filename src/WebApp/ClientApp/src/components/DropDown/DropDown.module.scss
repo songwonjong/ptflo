@@ -1,0 +1,46 @@
+.fieldBox {
+    display: inline-flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 0;
+    border: 0;
+    position: relative;
+    vertical-align: top;
+    min-width: 120px;
+    margin: 8px;
+
+  }
+  
+  .rows {
+    display: flex;
+    flex-direction: column;
+    width: 250px;
+    margin-right: 10px;
+    > span {
+      position: relative;
+      margin-right: 0.5em;
+      font-size: small;
+    }
+  }
+  
+  .options{
+    background-color: whitesmoke;
+    color: #2e2e2e;
+  }
+
+  .searchText {
+    display: flex;
+    flex-direction: row;
+    > input {
+      border-radius: 4px;
+      height: 30px;
+    }
+  }
+  
+  .modalText {
+    > input {
+      border-radius: 4px;
+      height: 23px;
+    }
+  }
+  

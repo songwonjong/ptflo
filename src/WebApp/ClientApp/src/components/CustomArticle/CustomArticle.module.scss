@@ -1,0 +1,85 @@
+@import "../../Styles/variavles";
+.container {
+  width: auto;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+  .title {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0.5rem;
+  }
+  .content {
+    border-bottom: 1px solid black;
+  }
+}
+
+@mixin common {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex: 1;
+}
+
+.leftTitleContainer {
+  @include common();
+  padding: 0px 2rem;
+  .title {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    flex: 1;
+    height: 100%;
+    .tilteIcon {
+      font-size: small;
+      margin-right: 1rem;
+    }
+    .titleText {
+      font-size: large;
+    }
+  }
+  .childL {
+    @include common();
+    flex: 2;
+    height: 100%;
+  }
+}
+.topTitleContainer {
+  @include common();
+  padding: 0px 2rem;
+  flex-direction: column;
+  .title {
+    display: flex;
+    font-weight: bold;
+    align-items: center;
+    font-size: large;
+    margin: 5px;
+  }
+  .childL {
+    @include common();
+    height: 100%;
+  }
+}
+
+.topLeftTitleContainer {
+  @include common();
+  flex-direction: column;
+  width: auto;
+  .title {
+    display: flex;
+    width: 100%;
+    font-weight: bold;
+    justify-content: flex-start;
+    align-items: center;
+    font-size: large;
+    margin: 0px 0px 0.5rem 1rem;
+    color: $main-color;
+  }
+  .childL {
+    @include common();
+    height: 100%;
+  }
+}

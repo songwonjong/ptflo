@@ -1,0 +1,187 @@
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+
+
+.modal4 {
+  display: none;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 99;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.modal4 button {
+  cursor: pointer;
+}
+.modal4 > section {
+  width: 90%;
+  max-width: 700px;
+  // min-height: 400px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 0.3rem;
+  background-color: #3e3e3e;
+  color: whitesmoke;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-show 0.3s;
+  overflow: hidden;
+}
+.modal4 > section > header {
+  position: relative;
+  padding: 16px 64px 16px 16px;
+  background-color: #2a2a2a;
+  font-weight: 700;
+  color: whitesmoke;
+  font-size: 16pt;
+}
+.modal4 > section > header button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  width: 30px;
+  font-size: 21px;
+  font-weight: 700;
+  text-align: center;
+  color: #999;
+  background-color: transparent;
+  border: none;
+}
+.modal4 > section > main {
+  padding: 10px 10px 10px 10px;
+  gap: 19px;
+  // row-gap: 5px;
+  // margin-right: -4px;
+  // border: 1px solid red;
+  // border-bottom: 1px solid #dee2e6;
+  // border-top: 1px solid #dee2e6;
+  display: flex;
+  flex-direction: column;
+  font-size: 15pt;
+}
+.modal4 > section > main >div{
+  display: grid;
+  grid-template-columns: 0.22fr  1fr;
+}
+
+.modal4 > section > main >div>span:first-child{
+  display: flex;
+  justify-content: center;
+  // justify-content: center;
+  padding-right: 5px;
+  padding-left: 5px;
+}
+// .modal4 > section > main >div>div{
+//   padding-top: 3px;
+//   padding-bottom: 3px;
+// }
+// .modal4 > section > main >div:last-child{
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+// }
+// .modal4 > section > main >div:first-child{
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-end;
+// }
+// .modal4 > section > main >div:last-child{
+//   display: flex;
+//   flex-direction: column;
+//   align-items: flex-start;
+// }
+.modal4 > section > footer {
+  padding: 20px 16px;
+  text-align: right;
+}
+.modal4.openModal {
+  display: flex;
+  align-items: center;
+  /* 팝업이 열릴때 스르륵 열리는 효과 */
+  animation: modal-bg-show 0.3s;
+}
+@keyframes modal-show {
+  from {
+    opacity: 0;
+    margin-top: -50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+@keyframes modal-bg-show {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+
+@import "../../Styles/variavles";
+@import "~ag-grid-community/src/styles/ag-grid.scss";
+@import "~ag-grid-community/src/styles/ag-theme-alpine/sass/ag-theme-alpine-mixin";
+.ag-theme-alpine7 {
+  height: 75vh;
+  width: 99%;
+  border: 2px solid #1b1b1b;
+  @include ag-theme-alpine(
+  );
+  .ag-header-cell {
+    // border-left: 1px solid whitesmoke;
+    background: #282828;
+    color: whitesmoke;
+    transition: 0.3s;
+  }
+  .ag-header-cell-text {
+    font-size: 20px;
+    font-weight: 800;
+  }
+  .ag-header-cell:hover {
+    background-color: whitesmoke;
+    color: #1b1b1b;
+  }
+  .ag-header-cell-label {
+    
+    justify-content: center;
+  }
+  .ag-row{
+    // border-left: 1px solid whitesmoke;
+    transition: 0.4s;
+    background-color: #3b3b3b;
+    color: whitesmoke;
+  }
+  div[class*='ag-row-selected']{
+    background-color: whitesmoke ;
+    color: #1b1b1b;
+  }
+  .ag-row:hover{
+    background-color: #c1c1c1;
+    color: #1b1b1b;
+  }
+
+  .ag-cell {
+    // border-left: 1px solid whitesmoke;
+    // border-right: 1px solid whitesmoke !important;
+    font-size: 12pt;
+    display: flex;
+    justify-content: center;
+    transition: 0.4s;
+  }
+  
+  div[class*='ag-root-wrapper ag-ltr ag-layout-normal']{
+    background-color: rgba(0,0,0,0);
+  }
+
+  
+  .ag-center-cols-viewport {
+    background-color: rgba(0,0,0,0);
+  }
+  .ag-center-cols-viewport::-webkit-scrollbar {
+    display:none;
+  }
+}
+

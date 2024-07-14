@@ -1,0 +1,27 @@
+.dropdownIcon {
+    >a::after {
+        background-image: url('../../Image/MenuIcon.png');
+        content: "";
+        display: block;
+        width: 20px;
+        /* 수평선의 너비 조정 */
+        height: 50px;
+        /* 수평선의 높이 조정 */
+        // background-color: #000;
+        /* 선의 색상을 원하는 색상으로 변경 */
+        margin: 5px auto;
+        /* 선의 간격을 조정 (상하 여백을 유지하려면 필요에 따라 조정) */
+    }
+}
+
+.menuIcon {
+    // padding: 10px 0;
+    // color: white;
+    text-decoration: none;
+}
+
+.menuIcon:hover {
+    cursor: pointer;
+    // color: black;
+    // background-color: rgb(206, 206, 206);
+}

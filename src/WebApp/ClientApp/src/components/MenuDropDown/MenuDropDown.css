@@ -1,0 +1,5 @@
+/* 햄버거 아이콘 스타일 */
+.navbar-toggler-icon {
+    background-color: #333;
+    /* 세로 선의 색상을 변경할 수 있습니다. */
+}

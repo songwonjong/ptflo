@@ -1,0 +1,9 @@
+@import "../../Styles/variavles";
+.continer {
+  display: grid;
+  grid-template-rows: 0.2fr 3fr;
+  width: 100vw;
+  height: 100vh;
+  // background-color: #1b1b1b;
+  // background-color: #2b2b2b;
+}

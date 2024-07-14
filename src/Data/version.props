@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <MajorVersion>6</MajorVersion>
+    <MinorVersion>3</MinorVersion>
+    <ReleaseVersion>2</ReleaseVersion>
+    <Revision>10</Revision>
+  </PropertyGroup>
+</Project>

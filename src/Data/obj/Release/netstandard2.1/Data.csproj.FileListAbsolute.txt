@@ -1,0 +1,17 @@
+F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.deps.json
+F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.pdb
+F:\PTFLO\ptflo\bin\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.xml
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.csproj.AssemblyReference.cache
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.Configuration.DesignResources.resources
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.Oracle.Configuration.DesignResources.resources
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.Properties.Resources.resources
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.System.Data.Common.Strings.resources
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.csproj.GenerateResource.cache
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.GeneratedMSBuildEditorConfig.editorconfig
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.AssemblyInfoInputs.cache
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.AssemblyInfo.cs
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.csproj.CoreCompileInputs.cache
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Data.csproj.CopyComplete
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.dll
+F:\PTFLO\ptflo\src\Data\obj\Release\netstandard2.1\Microsoft.Practices.EnterpriseLibrary.Data.pdb

@@ -1,0 +1,15 @@
+@import "../../Styles/variavles";
+.container {
+  width: auto;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  min-width: 150px;
+}
+
+.label {
+  font-size: large;
+  font-weight: bold;
+  color: $main-color;
+  margin: 0.5rem;
+}

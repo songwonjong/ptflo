@@ -1,0 +1,33 @@
+@import "../../Styles/variavles";
+@import "../../Styles/commons";
+.container {
+  display: grid;
+  grid-template-columns: 1fr 2fr 3fr;
+  height: 100%;
+}
+.logo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: beige;
+}
+.title {
+  display: flex;
+  margin: 5px;
+  justify-content: center;
+  align-items: center;
+  font-size: 25px;
+  overflow: hidden;
+  border: 1px solid palegreen;
+  border-radius: 5px;
+}
+.alarm {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  .err {
+    width: 200px;
+    height: 90%;
+    margin: 0px 5px;
+  }
+}

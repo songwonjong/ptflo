@@ -1,0 +1,16 @@
+F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.deps.json
+F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+F:\PTFLO\ptflo\bin\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.xml
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.csproj.AssemblyReference.cache
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.Configuration.DesignResources.resources
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.Properties.Resources.resources
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.csproj.GenerateResource.cache
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.GeneratedMSBuildEditorConfig.editorconfig
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.AssemblyInfoInputs.cache
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.AssemblyInfo.cs
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Common.csproj.CoreCompileInputs.cache
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\refint\Microsoft.Practices.EnterpriseLibrary.Common.dll
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\Microsoft.Practices.EnterpriseLibrary.Common.pdb
+F:\PTFLO\ptflo\src\Common\obj\Release\net5.0\ref\Microsoft.Practices.EnterpriseLibrary.Common.dll

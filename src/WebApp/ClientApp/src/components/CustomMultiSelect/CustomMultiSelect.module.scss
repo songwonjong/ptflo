@@ -1,0 +1,55 @@
+.customName {
+    font-weight: 700;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    white-space: nowrap;
+    height: 42px;
+  }
+  .customName div[class*='MuiFormControl-root']{
+    position: relative;
+    overflow: hidden;
+    background-color: white;
+    border-radius: 2px;
+    box-sizing: border-box;
+    color: #333;
+    cursor: default;
+    outline: none;
+    transition: all 200ms ease;
+    width: inherit;
+  }
+  .customName div[class*='MuiInputBase-root']:hover {
+    background-color: #dae3f3;
+  }
+  .customName fieldset[class*='Mui-focused'] {
+    border-width: 0px;
+  }
+  
+.customName div[class*='MuiInputBase-root']{
+  border: 2px solid black;
+  border-radius: 3px;
+  width: 230px;
+  height: 42px;
+  font-weight: bold;
+}
+.customName fieldset[class*='MuiOutlinedInput-notchedOutline']{
+  border-width:0px !important
+}
+  .datePickerInput {
+    margin-right: 10px;
+    margin-left: 10px;
+    text-align: center;
+    width: 160px;
+    height: 38px;
+    border-radius: 3px;
+    transition-duration: 0.3s;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 500;
+  }
+  .datePickerInput:hover {
+    background-color: #dae3f3;
+  }
+  .react-datepicker-wrapper {
+    height: 42px;
+  }
